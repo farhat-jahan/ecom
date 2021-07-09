@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+
+#website-image-body{
+
+    background-repeat: no-repeat;
+    width: auto; /*or your image's width*/
+    height: auto; /*or your image's height*/
+
+    width:1110px;
+    margin:0 auto;
+ }
+
+</style>
+
+    <div id="website-image-body" >
+{#	    <img src="{% static "shop/images/xyz.jpg" %}">#}
+	</div>
+
+{% endblock %}
