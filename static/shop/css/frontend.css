@@ -71,13 +71,25 @@ body{
 }
 #right-reserved h4{
     float:right;
-    margin-right:640px;
-    color:#ff8080;
+    margin-right:600px;
+    color: #ff8080;
+    font-size:14px;
 }
 #privacy a{
     float:right;
-    margin-right:680px;
+    margin-right:650px;
     color:#ff8080;
-
+    font-size: 12px;
 }
+/*Product page css*/
+
+.card-price{
+    color: green;
+    font-weight: 800;
+}
+.card-title{
+    font-weight:800 ;
+}
+
+
 

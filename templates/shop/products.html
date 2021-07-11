@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+    .product-container{
+        margin-top: 40px;
+        margin-left: 50px;
+    }
+    </style>
+
+    <div class="container">
+
+    <div class="row" style="width: 1320px;">
+        <div class="col-md-12">
+            <form class="card card-sm">
+                <div class="card-body row no-gytters align-items-center">
+                    <div class="col">
+                        <input type="search" name="item_name" placeholder="Search for Products" class="form-control form-control-borderless">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for prod in prod_object %}
+        <div class="col-md-3">
+            <div class="card">
+                <img src="{{ prod.image.url }}" class="card-img-top"  height="150">
+                <div class="card-body">
+                    <div class="card-title">
+                        {{ prod.title }}
+                    </div>
+                    <div class="card-price">
+                        {{ prod.price }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    </div>
+
+{% endblock %}
