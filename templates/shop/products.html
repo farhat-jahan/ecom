@@ -42,6 +42,32 @@
             </div>
         </div>
         {% endfor %}
+
+    <div class="row">
+        <div class="col-md-3 offset-md-4">
+
+        <ul class="pagination">
+            {% if page_object.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_object.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+
+                 <li class="page-item active" >
+                    <a class="page-link" href="?page={{ page_object.number }}">Current</a>
+                </li>
+
+            {% if prod_object.has_next %}
+                  <li class="page-item">
+                     <a class="page-link" href="?page={{ page_object.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+        </div>
+
+    </div>
+
+
     </div>
 
     </div>
