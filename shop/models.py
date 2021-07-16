@@ -29,6 +29,7 @@ class Product(Base):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255, default='admin')
+    discount = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='shop/images/')
     slug = models.SlugField(max_length=255)

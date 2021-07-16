@@ -10,6 +10,38 @@
     </style>
 
     <div class="container">
+     <div class="row">
+    <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                  </li>
+
+                  <li class="nav-item">
+{#                    <a id="cart-item" class="nav-link" href="#">Cart(0)</a>#}
+                      <button id="cart-item"  data-html="true" type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+                    sagittis lacus vel augue laoreet rutrum faucibus.">
+                    Cart(0)
+                      </button>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                  </li>
+                </ul>
+              </div>
+        </nav>
+      </div>
+    </div>
 
     <div class="row" style="width: 1320px;">
         <div class="col-md-12">
@@ -32,12 +64,14 @@
             <div class="card">
                 <img src="{{ prod.image.url }}" class="card-img-top"  height="150">
                 <div class="card-body">
-                    <div class="card-title">
+                    <div id="nm{{ prod.id }}" class="card-title" prod_name="{{ prod.title }}">
                         {{ prod.title }}
                     </div>
                     <div class="card-price">
                         {{ prod.price }}
                     </div>
+                    <a  href="{% url 'display_product_details' prod.id %}" class="btn btn-warning">View</a>
+                    <button id='{{ prod.id }}' class="btn atc btn-warning " >Add to cart</button>
                 </div>
             </div>
         </div>
@@ -72,4 +106,48 @@
 
     </div>
 
+
+<script type="text/javascript">
+    if (localStorage.getItem('cart') == null){
+        var cart= {};
+    }
+    else{
+        cart = JSON.parse((localStorage.getItem('cart')))
+    }
+
+    $(document).on('click', '.atc', function (){
+        let item_id = this.id.toString();
+        if (cart[item_id] != undefined){
+            cart[item_id] = cart[item_id]+1;
+        }
+        else {
+         cart[item_id] = 1;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        let cart_item_count  = document.getElementById("cart-item")
+        cart_item_count.innerHTML = "Cart(" +Object.keys(cart).length +")";
+    });
+
+    displayCart(cart);
+    function displayCart(cart){
+       let cartString = '';
+       cartString = cartString + "<h6>This is your cart </h6>";
+       let cartIndex = 1;
+       for(var x in cart){
+
+           if(document.getElementById("nm"+x) != null){
+             var cart_item_name = document.getElementById("nm"+x).innerHTML;
+            }
+
+           cartString  = cartString +cartIndex+")"+ cart_item_name+" "+"Qty:"+cart[x]+"<br>";
+           cartIndex = cartIndex +1;
+       }
+       cartString = cartString + "<br>"+"<button id='chekout' class='btn btn-warning' >Checkout</button>";
+       document.getElementById('cart-item').setAttribute('data-content',cartString);
+       $('[data-toggle="popover"]').popover()
+    }
+
+</script>
+
+s
 {% endblock %}
