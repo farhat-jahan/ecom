@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div>
+    </div>
+    </br></br>
+
+    <div class="card text-center">
+          <div class="card-header">
+            Class- CSC-520, Professor-Faramarz Mortezaie
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Instruction for this website and college-project</h5>
+            <p class="card-text">This ecommerce website is developed for self learning.I am not going to use this for business
+                purpose.All the images are used for college-project.Please do not use all these images and content for professional use </p>
+            <a href="{% url 'display_products' %}" class="btn btn-primary">Start shopping</a>
+          </div>
+          <div class="card-footer text-muted">
+
+          </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">About Developer</h5>
+                  <p>My name is Farhat.I am from CS major and i m graduating in August 2021.</p>
+                  <img src="{% static 'shop/images/farhat.jpeg' %}" style="width: 90px; height: 100px;margin-left: 10px;"><br><br>
+
+                <a href="https://getbootstrap.com/docs/5.1/content/tables/" class="btn btn-primary">Email me</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">About web-pages</h5>
+                  <li>
+                      I have used Bootstrap to develop HTML and CSS
+                  </li>
+                  <li>Bootstrap is a HTML, CSS & JS Library
+                    that focuses on simplifying the development of informative web pages</li><br><br><br>
+                <a href="https://getbootstrap.com/docs/5.1/content/tables/" class="btn btn-primary">Go to Bootstrap</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">About this project</h5>
+                  <li>
+                    This is an e-com website where you can purchase the product.
+                  </li>
+                  <li>
+                      users can view all the available products.
+                  </li>
+                  <li>
+                       Users can add the product to the cart.
+                  </li>
+                  <li>
+                      Users can make the payment for the <purchase class=""></purchase>
+                  </li>
+                  <li>
+                      I also included the separate login for Admin.
+                  </li>
+                  <li>
+                      Admin are authorized to add/ update/ delete the product
+                  </li><br><br>
+                    <a href="https://getbootstrap.com/docs/5.1/content/tables/" class="btn btn-primary">Github link</a>
+              </div>
+            </div>
+          </div>
+    </div>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Orders
 from django.core.paginator import Paginator
+from django.template import RequestContext
 
 # Create your views here.
 
@@ -10,6 +11,20 @@ def index(request):
     :return:
     """
     return render(request, 'shop/index.html')
+
+def home(request):
+    """    Display website home-page
+    :param request:
+    :return:
+    """
+    return render(request, 'shop/home.html')
+
+def about(request):
+    """    Display website about-page
+    :param request:
+    :return:
+    """
+    return render(request, 'shop/about.html')
 
 
 def display_products(request):
@@ -38,4 +53,22 @@ def display_product_details(request, prod_id):
         product_object = []
 
     return render(request, "shop/product_details.html", {'product_object': product_object})
+
+
+def checkout_products(request):
+    if request.method == 'POST':
+        item = request.POST.get('item', '')
+        quantity = request.POST.get('quantity', '')
+        price = request.POST.get('item-price', '')
+        print("model--", price)
+        name = request.POST.get('name','')
+        email = request.POST.get('email', '')
+        address = request.POST.get('address', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        zip_code = request.POST.get('zipcode', '')
+        order = Orders(item=item, quantity=quantity, price=price,name=name, email=email, address=address, city=city, state=state,zip_code=zip_code)
+        order.save()
+    return render(request,  "shop/checkout.html")#, RequestContext(request))
+
 

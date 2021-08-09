@@ -7,7 +7,7 @@ import datetime
 
 class Base(models.Model):
     id = models.AutoField(primary_key=True)
-    created_date = models.DateField(timezone.now())
+    created_date = models.DateField(default=timezone.now())
 
     class Meta:
         abstract = True
@@ -43,4 +43,23 @@ class Product(Base):
 
     def __str__(self):
         return self.title
+
+
+class Orders(Base):
+    item = models.CharField(max_length=1000)
+    quantity = models.CharField(max_length=20, null=False)
+    price = models.CharField(max_length=40, default=0)
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'orders'
+
+    def __str__(self):
+        return self.item
+
 

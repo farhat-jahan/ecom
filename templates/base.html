@@ -19,14 +19,15 @@
 <body style="zoom: 1;">
 
 	<div class="full-header">
-	<div id="main-page-logo">
-	</div>
+	<a href="{% url 'home' %}"><div id="main-page-logo"></div></a>
 
 	<div id="main-page-heading">
 			<div>
 				<ul>
-					<li class="active"><a href=""> Home  </a></li>
-					<li> <a href=""> About  </a> </li>
+					<li class="active"><a href="{% url 'home' %}"> Home  </a></li>
+					<li> <a href="{% url 'about' %}"> About  </a> </li>
+                    <li> <a href="{% url 'display_products' %}">products</a></li>
+                    <li> <a href="{% url 'admin:index' %}">Admin</a></li>
 					<li> <a>SignUp</a></li>
 					<li><a> SignIn  </a></li>
 				</ul>

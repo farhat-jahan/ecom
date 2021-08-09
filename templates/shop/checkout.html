@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+</br></br><br>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-group" id="added-items">
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+            <div class="col-md-12" >
+                <li class='list-group-item' id="amount-to-pay" >Total Amount to Pay-</li>
+            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+           <form class="row g-3" method="post" id="order-form">
+               {% csrf_token %}
+               <input type="hidden" id="item-name" name="item">
+               <input type="hidden" id="item-quantity" name="quantity">
+               <input type="hidden" id="item-price" name="item-price">
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Name</label>
+                <input type="test" id="name" name="name" class="form-control"  placeholder="Farhat">
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Email</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="farhat@itu.edu">
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" id="address" name="address" class="form-control"  placeholder="1234 Main St San jose">
+              </div>
+{#              <div class="col-12">#}
+{#                <label for="inputAddress2" class="form-label">Address 2</label>#}
+{#                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">#}
+{#              </div>#}
+              <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" id="city" name="city" class="form-control" >
+              </div>
+              <div class="col-md-4">
+                <label for="inputState" class="form-label">State</label>
+                <input type="text" id="state" name="state" class="form-control">
+{#                <select id="inputState" class="form-select">#}
+{#                  <option selected>Choose...</option>#}
+{#                  <option>...</option>#}
+{#                </select>#}
+              </div>
+              <div class="col-md-2">
+                <label for="inputZip" class="form-label">Zip</label>
+                <input type="text" id="zipcode" name="zipcode" class="form-control" >
+              </div>
+{#              <div class="col-12">#}
+{#                <div class="form-check">#}
+{#                  <input class="form-check-input" type="checkbox" id="gridCheck">#}
+{#                  <label class="form-check-label" for="gridCheck">#}
+{#                    Check me out#}
+{#                  </label>#}
+{#                </div>#}
+{#              </div>#}
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary" id="submit-order">Place Order</button>
+              </div>
+           </form>
+        </div>
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        if (localStorage.getItem('cart')==null){
+            var cart={}
+        }
+        else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            console.log("cheecou toage-- fdartt---"+cart);
+        }
+        var itemString='';
+        for (var x in cart) {
+            console.log("var x in cartt---------" + x)
+            let item_quantity = cart[x][0]
+            let item_name = cart[x][1]
+            let item_price = cart[x][2]
+            itemString = itemString+"<li class='list-group-item'>"+item_name +"-"+item_quantity+"    "+"<span class='btn btn-info'>"+item_price+"</span>"+"</li>";
+            console.log()
+            {#$("#added-items").append(itemString)#}
+            document.getElementById("added-items").innerHTML = itemString
+        }
+
+        var hidden_item_names ='';
+        for(var i in cart){
+            hidden_item_names = hidden_item_names+cart[i][1]+", ";
+        }
+        $("#item-name").val(hidden_item_names)
+
+        var hidden_item_quantity ='';
+        for(var i in cart){
+            hidden_item_quantity = hidden_item_quantity+cart[i][0].toString()+", ";
+        }
+        $("#item-quantity").val(hidden_item_quantity)
+
+       var hidden_item_price ='';
+        var amount_to_pay = 0;
+        for(var i in cart){
+            var total_price = cart[i][2]
+            amount_to_pay = amount_to_pay +total_price
+            hidden_item_price = hidden_item_price+total_price+", ";
+        }
+        $("#item-price").val(hidden_item_price)
+        document.getElementById("amount-to-pay").innerHTML = "Total amount to pay:-"+"<span class='btn btn-info'>"+amount_to_pay+"</span>"
+        $("#item-price").val(hidden_item_price)
+
+        $( "#order-form" ).submit(function( event ) {
+          alert( "Order placed successfully" );
+
+        });
+
+
+    </script>
+{% endblock %}

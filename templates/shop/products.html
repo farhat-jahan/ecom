@@ -27,7 +27,7 @@
                   </li>
 
                   <li class="nav-item">
-{#                    <a id="cart-item" class="nav-link" href="#">Cart(0)</a>#}
+{#                    <a id="cart-item_count" class="nav-link" href="#">Cart(0)</a>#}
                       <button id="cart-item"  data-html="true" type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
                     sagittis lacus vel augue laoreet rutrum faucibus.">
                     Cart(0)
@@ -64,12 +64,8 @@
             <div class="card">
                 <img src="{{ prod.image.url }}" class="card-img-top"  height="150">
                 <div class="card-body">
-                    <div id="nm{{ prod.id }}" class="card-title" prod_name="{{ prod.title }}">
-                        {{ prod.title }}
-                    </div>
-                    <div class="card-price">
-                        {{ prod.price }}
-                    </div>
+                    <div id="nm{{ prod.id }}" class="card-title" prod_name="{{ prod.title }}">{{ prod.title }}</div>
+                    <div id="price{{ prod.id }}" class="card-price">{{ prod.price }}</div>
                     <a  href="{% url 'display_product_details' prod.id %}" class="btn btn-warning">View</a>
                     <button id='{{ prod.id }}' class="btn atc btn-warning " >Add to cart</button>
                 </div>
@@ -117,16 +113,37 @@
 
     $(document).on('click', '.atc', function (){
         let item_id = this.id.toString();
+
+        {#if (cart[item_id] != undefined){#}
+        {#    cart[item_id] = cart[item_id]+1;#}
+        {#}#}
+        {#else {#}
+        {# cart[item_id] = 1;#}
+        {#}#}
+
         if (cart[item_id] != undefined){
-            cart[item_id] = cart[item_id]+1;
+            quantity = cart[item_id][0]+1;
+            cart[item_id][0] = quantity;
+            cart[item_id][2] = cart[item_id][2]+parseFloat(document.getElementById("price"+item_id).innerHTML);
+
         }
         else {
-         cart[item_id] = 1;
+         quantity = 1;
+         item_name = document.getElementById("nm"+item_id).innerHTML;
+         item_price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+         console.log("I am printing------"+item_price);
+         cart[item_id] = [quantity, item_name,item_price];
         }
+
         localStorage.setItem('cart', JSON.stringify(cart));
-        let cart_item_count  = document.getElementById("cart-item")
-        cart_item_count.innerHTML = "Cart(" +Object.keys(cart).length +")";
+        {#let cart_item_count  = document.getElementById("cart-item");#}
+        {#let cart_item_count  = document.getElementById("cart-item")#}
+        {#cart_item_count.innerHTML = "Cart(" +Object.keys(cart).length +")";#}
     });
+
+    let cart_item_count  = document.getElementById("cart-item");
+        {#let cart_item_count  = document.getElementById("cart-item")#}
+    cart_item_count.innerHTML = "Cart(" +Object.keys(cart).length +")";
 
     displayCart(cart);
     function displayCart(cart){
@@ -139,15 +156,17 @@
              var cart_item_name = document.getElementById("nm"+x).innerHTML;
             }
 
-           cartString  = cartString +cartIndex+")"+ cart_item_name+" "+"Qty:"+cart[x]+"<br>";
+           {#cartString  = cartString +cartIndex+")"+ cart_item_name+" "+"Qty:"+cart[x]+"<br>";#}
+           cartString  = cartString +cartIndex+")"+ cart_item_name+" "+"Qty:"+cart[x][0]+"<br>";
            cartIndex = cartIndex +1;
        }
-       cartString = cartString + "<br>"+"<button id='chekout' class='btn btn-warning' >Checkout</button>";
+       console.log("cart item------------"+localStorage.getItem('cart'))
+       cartString = cartString + "<br>"+"<button id='checkout' class='btn btn-warning' ><a class='btn btn-warning'   href='{% url 'checkout_products' %}'>Checkout</a></button>";
        document.getElementById('cart-item').setAttribute('data-content',cartString);
        $('[data-toggle="popover"]').popover()
     }
 
 </script>
 
-s
+
 {% endblock %}

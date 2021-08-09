@@ -18,11 +18,11 @@ body{
   }
 
 #main-page-heading{
-    height:100px;
+    height:80px;
     background-size:cover;
     background-position:center;
     float:right;
-    margin-top:40px;
+    margin-top:20px;
     margin-right:40px;
 }
 
@@ -53,9 +53,19 @@ body{
     background : url("../images/logo.png") no-repeat;
     background-size:100%;
     margin:20px;
-    width:145px;
-    height:85px;
+    width:140px;
+    height:40px;
     float:left;
+}
+
+.home-image-container{
+    height: 100px;
+    width: 100%;
+}
+#home-page-image{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 #footer{
