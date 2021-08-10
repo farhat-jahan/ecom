@@ -1,7 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product, Orders
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.views.defaults import page_not_found
+
+
 
 # Create your views here.
 
@@ -12,12 +18,14 @@ def index(request):
     """
     return render(request, 'shop/index.html')
 
+
 def home(request):
     """    Display website home-page
     :param request:
     :return:
     """
     return render(request, 'shop/home.html')
+
 
 def about(request):
     """    Display website about-page
@@ -27,6 +35,56 @@ def about(request):
     return render(request, 'shop/about.html')
 
 
+@csrf_exempt
+def sign_in(request):
+    """    Display website sign-in-page
+    :param request:
+    :return:
+    """
+    username = ''
+    user_password = ''
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(username=email, password=password)
+        
+        if user is None:
+            username = 'Username not found, Try again'
+            user_password = 'Password not found, Try again'
+        else:
+            login(request, user)
+            return redirect('/shop/product')
+
+    return render(request, 'shop/signin.html', {'username': username, 'user_password': user_password})
+
+
+@csrf_exempt
+def sign_up(request):
+    """    Display website sign-in-page
+    :param request:
+    :return:
+    """
+    error = ''
+    usernameexist = ''
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        confirmpassword = request.POST.get('confirmpassword')
+        user = authenticate(username=username, password=password)
+
+        if password != confirmpassword:
+            error = 'Password and confirm password are mismatched'
+            return render(request, 'shop/signup.html', {'error': error})
+        if user is None:
+            new_user = User(username=username)
+            new_user.save()
+            new_user.set_password(password)
+            new_user.save()
+            return redirect('/shop/product')
+
+    return render(request, 'shop/signup.html')
+
+
 def display_products(request):
     prod_object = Product.objects.all()
     search_item = request.GET.get('item_name')
@@ -34,7 +92,7 @@ def display_products(request):
     if search_item != '' and search_item is not None:
         prod_object = Product.objects.filter(title__icontains=search_item)
 
-    paginator = Paginator(prod_object, 2) #display 16 data/page
+    paginator = Paginator(prod_object, 2)  # display 16 data/page
     print("paginator.num_pages to see total pages after pagination", paginator.num_pages)
     print("paginator.count to see total db product data before pagination", paginator.count)
     page_number = request.GET.get('page')
@@ -61,14 +119,39 @@ def checkout_products(request):
         quantity = request.POST.get('quantity', '')
         price = request.POST.get('item-price', '')
         print("model--", price)
-        name = request.POST.get('name','')
+        name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         address = request.POST.get('address', '')
         city = request.POST.get('city', '')
         state = request.POST.get('state', '')
         zip_code = request.POST.get('zipcode', '')
-        order = Orders(item=item, quantity=quantity, price=price,name=name, email=email, address=address, city=city, state=state,zip_code=zip_code)
+        order = Orders(item=item, quantity=quantity, price=price, name=name, email=email, address=address, city=city,
+                       state=state, zip_code=zip_code)
         order.save()
-    return render(request,  "shop/checkout.html")#, RequestContext(request))
+    return render(request, "shop/checkout.html")  # , RequestContext(request))
 
 
+# TODO: need to implement this
+def send_email(request):
+    """    Display website send email-page
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        pass
+    return render(request, 'shop/sendemail.html')
+
+
+# TODO: need to implement this
+@csrf_exempt
+def feedback(request):
+    """    Display website feedback
+    :param request:
+    :return:
+    """
+    print("hi@@@@ ", request.POST)
+    if request.method == 'POST':
+        message = request.POST.get['msg']
+        print("hiiii", messages)
+        pass
+    return render(request, 'shop/sendemail.html')

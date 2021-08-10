@@ -2,9 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div>
-    </div>
-    </br></br>
+    <div></div></br></br>
 
     <div class="card text-center">
           <div class="card-header">
@@ -28,8 +26,7 @@
                 <h5 class="card-title">About Developer</h5>
                   <p>My name is Farhat.I am from CS major and i m graduating in August 2021.</p>
                   <img src="{% static 'shop/images/farhat.jpeg' %}" style="width: 90px; height: 100px;margin-left: 10px;"><br><br>
-
-                <a href="https://getbootstrap.com/docs/5.1/content/tables/" class="btn btn-primary">Email me</a>
+                <a class="btn btn-primary" onclick="sendFeeedback()">Feedback</a>
               </div>
             </div>
           </div>
@@ -70,9 +67,38 @@
                       Admin are authorized to add/ update/ delete the product
                   </li><br><br>
                     <a href="https://getbootstrap.com/docs/5.1/content/tables/" class="btn btn-primary">Github link</a>
-              </div>
+            </div>
             </div>
           </div>
-    </div>
+        </div>
+
+    <script type="text/javascript">
+            function sendFeeedback() {
+                var msg_data = {}
+                let text;
+                let person_email = prompt("Please enter your email:");
+                if (person_email == null || person_email == "") {
+                text = "User cancelled the prompt.";
+                } else {
+                    text = "Dear " + person_email + "Thank you for the feedback.Stay tuned";
+                    msg_data['msg'] = person_email;
+                }
+
+                if(Object.keys(msg_data).length!=0){
+                    console.log("#####")
+                    $.ajax({
+                    url:"{% url 'feedback' %}",
+                    {#header: {'X-CSRF-TOKEN':CSRF_HEADER_NAME}#}
+                    type:'POST',
+                    dataType:'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(msg_data)
+                     });
+                }
+                alert(text)
+            }
+
+
+    </script>
 
 {% endblock %}

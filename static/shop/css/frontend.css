@@ -101,5 +101,30 @@ body{
     font-weight:800 ;
 }
 
-
+.sendemail-popup{
+    background:rgba(0,0,0,0.6);
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.sendemail-pupup-content{
+    height: 250px;
+    font-weight: 500px;
+    background: #fff;
+    padding:20px;
+    border-radius: 5px;
+    position: relative;
+}
+.sendemail-pupup-content input{
+    margin:20px auto;
+    display: block;
+    width: 50%;
+    padding:8px;
+    border: 1px solid;
+}
 
