@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+
+from shop.views import SecureMediaFile
 from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('shop.urls')),
+    path('media/<str:file>', SecureMediaFile, name='media_file_secure'),
+
 ]
 
 if settings.DEBUG:

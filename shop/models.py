@@ -62,4 +62,13 @@ class Orders(Base):
     def __str__(self):
         return self.item
 
+class MediaTest(models.Model):
+    description = models.CharField(max_length=200)
+    image_details = models.ImageField()
+    class Meta:
+        db_table = 'MediaTest'
+
+    def __str__(self):
+        return self.image_details.name
+
 

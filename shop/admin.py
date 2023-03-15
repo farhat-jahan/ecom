@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Categories, Orders
+from .models import Product, Categories, Orders, MediaTest
 
 
 class CategoriesAdmin(admin.ModelAdmin):
@@ -25,3 +25,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['city', 'state']
 
 admin.site.register(Orders, OrderAdmin)
+
+class MediaTestAdmin(admin.ModelAdmin):
+    list_display = ['description','image_details']
+
+admin.site.register(MediaTest, MediaTestAdmin)

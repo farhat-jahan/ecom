@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
-from .models import Product, Orders
+import os.path
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product, Orders, MediaTest
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.http import FileResponse
 from django.views.defaults import page_not_found
-
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -16,7 +19,10 @@ def index(request):
     :param request:
     :return:
     """
-    return render(request, 'shop/index.html')
+    #return render(request, 'shop/index.html')
+    data = Product.objects.all()
+    return render(request, 'shop/index.html',{'data':data})
+
 
 
 def home(request):
@@ -155,3 +161,17 @@ def feedback(request):
         print("hiiii", messages)
         pass
     return render(request, 'shop/sendemail.html')
+
+def media_url_test(request):
+    data = MediaTest.objects.all().last()
+    return  render(request,'shop/media_test.html',{'data':data})
+
+@login_required
+def SecureMediaFile(request, file):
+    """If user will try to open media file, this will show login required"""
+    print("-test---")
+    d = get_object_or_404(MediaTest,pdf = "/media/")
+    print(d)
+    path, file_name = os.path.split(file)
+    response = FileResponse(d.pdf)
+    return response

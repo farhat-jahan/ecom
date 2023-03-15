@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div align="center">
+        In this example we use "MEDIA URL VARIABLE FROM SETTING.PY FILE"
+    </div>
+
+<div align="center">
+    This is Media URL:{{MEDIA_URL}}<br>
+</div>
+<div align="center">
+    Images Description:{{data.description}}<br>
+    image Name:{{data.image_details}}<br>
+</div>
+    <div class="home-image-container" align="center">
+    <div id="home-page-image" align="center">
+        Below we are using this way to display images "MEDIA_URL.data.image_details.name"<br>
+        <img src="{{MEDIA_URL}}{{data.image_details.name}}">
+    </div>
+    </div>
+
+{% endblock %}

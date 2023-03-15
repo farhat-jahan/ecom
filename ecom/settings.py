@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-8d(ga)_2^097m#%+xas&sb_2+qq@3*%&9!#j994@9j2lyqd-v2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -62,6 +62,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware'
 
+
 )
 
 ROOT_URLCONF = 'ecom.urls'
@@ -78,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #here add your context Processors FOR MEDIA
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -146,12 +149,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+print(os.path.join(BASE_DIR, "static"))
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+#Add this to copy the static files from the perviously defined path to this path (for)
+STATIC_ROOT = 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
