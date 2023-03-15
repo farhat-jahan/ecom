@@ -23,10 +23,11 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('shop.urls')),
+    #Protect to open media file
     path('media/<str:file>', SecureMediaFile, name='media_file_secure'),
 
 ]
-
+# #THIS MUST NEEDED FOR MEDIA FILES
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

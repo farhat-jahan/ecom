@@ -150,13 +150,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 print(os.path.join(BASE_DIR, "static"))
+#ecom>static
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-#Add this to copy the static files from the perviously defined path to this path (for)
+#Add this to copy the static files from the STATICFILES_DIRS TO path YOU WANT
+#python manage.py collectstatic, mostly for Prod,currently it will create under Project level
+#ecom>staticfiles
 STATIC_ROOT = 'staticfiles'
 
 MEDIA_URL = '/media/'
+#CREATES "media" folder under defined path, in this example at project level
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type

@@ -158,20 +158,23 @@ def feedback(request):
     print("hi@@@@ ", request.POST)
     if request.method == 'POST':
         message = request.POST.get['msg']
-        print("hiiii", messages)
+        print("hiiii", message)
         pass
     return render(request, 'shop/sendemail.html')
 
 def media_url_test(request):
+    """URL: http://127.0.0.1:8000/shop/mediatest/
+    note:SecureMediaFile method will protect to open media file based on login
+    """
     data = MediaTest.objects.all().last()
-    return  render(request,'shop/media_test.html',{'data':data})
+    return render(request,'shop/media_test.html',{'data':data})
 
 @login_required
 def SecureMediaFile(request, file):
-    """If user will try to open media file, this will show login required"""
-    print("-test---")
-    d = get_object_or_404(MediaTest,pdf = "/media/")
-    print(d)
+    """This protects opening of media file, werever it is used."""
+    print("Executing SecureMediaFile...")
+    data = get_object_or_404(MediaTest)
+    print(data)
     path, file_name = os.path.split(file)
-    response = FileResponse(d.pdf)
+    response = FileResponse(data.image_details)
     return response

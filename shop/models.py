@@ -64,6 +64,7 @@ class Orders(Base):
 
 class MediaTest(models.Model):
     description = models.CharField(max_length=200)
+    #UPLOAD IMAGES UNDER "media" DIR
     image_details = models.ImageField()
     class Meta:
         db_table = 'MediaTest'

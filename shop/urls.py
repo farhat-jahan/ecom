@@ -18,7 +18,5 @@ urlpatterns = [
     path('product/<int:prod_id>/', display_product_details, name='display_product_details'),
     path('checkout/', checkout_products, name='checkout_products'),
     path('mediatest/', media_url_test, name='media_test'),
-#path('media/<str:file>', SecureMediaFile, name='media_file_secure'),
+
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
